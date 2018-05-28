@@ -121,6 +121,9 @@ public class Game extends JPanel implements Runnable, KeyListener{
 		if(left==false && right==false && up==false)
 			ship.setThrust(0);
 		ship.tick();
+		if(x>1221)
+			ship.x = 1;
+
 	}
 	
 	public void run() {
