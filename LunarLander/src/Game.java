@@ -117,9 +117,9 @@ public class Game extends JPanel implements Runnable, KeyListener{
 			ship.setThrust(0);
 		ship.tick();
 		if(ship.getX()>1222)
-			ship.setX(1);
+			ship.setX(2);
 		if(ship.getX() < 2)
-			ship.setX(1224);
+			ship.setX(1222);
 
 	}
 	
