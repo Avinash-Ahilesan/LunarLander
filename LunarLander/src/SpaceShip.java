@@ -14,7 +14,7 @@ public class SpaceShip {
 	private double leftThrust = 0;
 	private long time;
 	private int fuel;
-	private double x = 612,y = 50;
+	public double x = 612,y = 50;
 
 	public SpaceShip(int fuel)
 	{
