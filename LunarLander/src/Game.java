@@ -33,7 +33,7 @@ public class Game extends JPanel implements Runnable, KeyListener{
 		this.height = height;
 
 
-		frame = new JFrame ("Escape from Tarkov");
+		frame = new JFrame ("Avinash and Siavash's Space Game");
 		frame.setSize(width, height);
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	//game stays open in background unless this is set	
@@ -68,7 +68,7 @@ public class Game extends JPanel implements Runnable, KeyListener{
 	public synchronized void start()
 	{
 		thread = new Thread(this);
-		thread.start();	//runs thread
+		thread.start();	//starts new thread, runs the run method
 	}
 	
 	
@@ -132,7 +132,7 @@ public class Game extends JPanel implements Runnable, KeyListener{
 		 *  when on certain screens lol)
 		 */
 		
-		int ticksPerSecond = 120;	//limiting times that tick and render can run, effectively an fps limit
+		int ticksPerSecond = 500;	//limiting times that tick and render can run, effectively an fps limit
 		double timePerTick = 1000000000 / ticksPerSecond;	//dividing 1 second (1B nanoseconds) by 60  ticks per second to get time per tick
 		double nextTick = 0;
 		long now;
@@ -149,6 +149,7 @@ public class Game extends JPanel implements Runnable, KeyListener{
 				tick();
 				nextTick -= 1;
 			}
+			
 			render();	
 		}
 	}

@@ -34,7 +34,7 @@ public class SpaceShip {
 	public void setHorizontalSpeed(double horizontalSpeed) {
 		this.horizontalSpeed = horizontalSpeed;
 	}
-
+	
 	public void tick()
 	{
 		verticalSpeed+=0.001;
@@ -49,13 +49,13 @@ public class SpaceShip {
 	{
 		rightThrust = 0;
 		if(leftThrust <=0.2)
-			leftThrust += 0.5;
+			leftThrust += 0.3;
 	}
 	public void moveRight()
 	{
 		leftThrust = 0;
 		if(rightThrust <=0.2)
-			rightThrust += 0.5;
+			rightThrust += 0.3;
 	}
 	public void setThrust(int thrustValue)
 	{
@@ -63,7 +63,7 @@ public class SpaceShip {
 	}
 	public void increaseThrust()
 	{
-		if(upThrust <=0.0025)
+		if(upThrust <=0.0027)
 			upThrust += 0.00005;
 		
 	}
