@@ -63,7 +63,7 @@ public class SpaceShip {
 	}
 	public void increaseThrust()
 	{
-		if(upThrust <=0.002)
+		if(upThrust <=0.0025)
 			upThrust += 0.00005;
 		
 	}
