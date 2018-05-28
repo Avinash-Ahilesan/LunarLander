@@ -14,7 +14,7 @@ public class SpaceShip {
 	private double leftThrust = 0;
 	private long time;
 	private int fuel;
-	public double x = 612,y = 50;
+	private double x = 612,y = 50;
 
 	public SpaceShip(int fuel)
 	{
@@ -66,6 +66,22 @@ public class SpaceShip {
 		if(upThrust <=0.0027)
 			upThrust += 0.00005;
 		
+	}
+	public double getX()
+	{
+		return x;
+	}
+	public double getY()
+	{
+		return y;
+	}
+	public void setX(double x)
+	{
+		this.x= x;
+	}
+	public void setY(double y)
+	{
+		this.y = y;
 	}
 	public void draw(Graphics g)
 	{

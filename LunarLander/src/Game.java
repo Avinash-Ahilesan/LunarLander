@@ -24,8 +24,6 @@ public class Game extends JPanel implements Runnable, KeyListener{
 	private boolean keys[] = new boolean[256];
 	boolean left,right,up,down;
 	
-	//TEST CODE
-	int x = 612, y = 50;
 	
 	public Game(int width, int height)
 	{
@@ -105,24 +103,23 @@ public class Game extends JPanel implements Runnable, KeyListener{
 		//in my JRPG all my game logic (like updating player vars and stuff) went in here, not sure how useful this will be here
 		getGameInput();
 		if(left){ 
-			x-= 1;
 			ship.moveLeft();
 		}
 		if(right){
-			x+=1;
 			ship.moveRight();
 		}
 		if(up){
 			ship.increaseThrust();
-			y-= 1;
 		}
 		/*else if(down )
 			y+= 1;*/
 		if(left==false && right==false && up==false)
 			ship.setThrust(0);
 		ship.tick();
-		if(x>1221)
-			ship.x = 1;
+		if(ship.getX()>1222)
+			ship.setX(1);
+		if(ship.getX() < 2)
+			ship.setX(1224);
 
 	}
 	
@@ -135,7 +132,7 @@ public class Game extends JPanel implements Runnable, KeyListener{
 		 *  when on certain screens lol)
 		 */
 		
-		int ticksPerSecond = 500;	//limiting times that tick and render can run, effectively an fps limit
+		int ticksPerSecond = 140;	//limiting times that tick and render can run, effectively an fps limit
 		double timePerTick = 1000000000 / ticksPerSecond;	//dividing 1 second (1B nanoseconds) by 60  ticks per second to get time per tick
 		double nextTick = 0;
 		long now;
