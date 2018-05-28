@@ -40,28 +40,42 @@ public class SpaceShip {
 		verticalSpeed+=0.001;
 		verticalSpeed-=upThrust;
 		y+=verticalSpeed;
-		if(rightThrust >0)
+		horizontalSpeed-= leftThrust;
+		horizontalSpeed+= rightThrust;
+		x+=horizontalSpeed;
+		System.out.println("vertical speed:" +verticalSpeed);
+		System.out.println("horizontal Speed: " + horizontalSpeed);
+		/*if(rightThrust >0)
 			x+=rightThrust;
 		else if(leftThrust >0)
-			x-= leftThrust;
+			x-= leftThrust;*/
 	}
-	public void moveLeft()
+	public void increaseLeftThrust()
 	{
-		rightThrust = 0;
-		if(leftThrust <=0.2)
-			leftThrust += 0.3;
+		if(leftThrust <=0.003){
+			leftThrust += 0.0003;
+			rightThrust = 0;
+		}
 	}
-	public void moveRight()
+	
+	public void increaseRightThrust()
+	{
+		
+		if(rightThrust <=0.003){
+			rightThrust += 0.0003;
+			leftThrust = 0;
+		}
+	}
+	public void destroyHorizontalThrust()
 	{
 		leftThrust = 0;
-		if(rightThrust <=0.2)
-			rightThrust += 0.3;
+		rightThrust = 0;
 	}
-	public void setThrust(int thrustValue)
+	public void destroyVerticalThrust()
 	{
-		upThrust = thrustValue;
+		upThrust = 0;
 	}
-	public void increaseThrust()
+	public void increaseUpThrust()
 	{
 		if(upThrust <=0.0027)
 			upThrust += 0.00005;
@@ -83,6 +97,7 @@ public class SpaceShip {
 	{
 		this.y = y;
 	}
+	
 	public void draw(Graphics g)
 	{
 		g.setColor(Color.RED);

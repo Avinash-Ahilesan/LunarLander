@@ -93,7 +93,8 @@ public class Game extends JPanel implements Runnable, KeyListener{
 		//g.drawImage(Res.player, x, y, null);
 		//End Draw
 		ship.draw(g);
-		
+		g.drawString(Double.toString(ship.getHorizontalSpeed()), 10, 10);
+		g.drawString(Double.toString(ship.getVerticalSpeed()), 10, 20);
 		bufferStrat.show();
 		g.dispose();
 	}
@@ -103,18 +104,22 @@ public class Game extends JPanel implements Runnable, KeyListener{
 		//in my JRPG all my game logic (like updating player vars and stuff) went in here, not sure how useful this will be here
 		getGameInput();
 		if(left){ 
-			ship.moveLeft();
+			ship.increaseLeftThrust();
 		}
 		if(right){
-			ship.moveRight();
+			ship.increaseRightThrust();
 		}
 		if(up){
-			ship.increaseThrust();
+			ship.increaseUpThrust();
 		}
 		/*else if(down )
 			y+= 1;*/
-		if(left==false && right==false && up==false)
-			ship.setThrust(0);
+		if(left==false && right==false && up==false){
+			ship.destroyVerticalThrust();
+			ship.destroyHorizontalThrust();
+		}
+		else if(left==false && right==false)
+			ship.destroyHorizontalThrust();
 		ship.tick();
 		if(ship.getX()>1222)
 			ship.setX(2);
