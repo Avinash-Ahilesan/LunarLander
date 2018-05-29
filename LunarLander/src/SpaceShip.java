@@ -38,14 +38,14 @@ public class SpaceShip {
 
 	public void tick()
 	{
-		if(verticalSpeed > -0.4){
+		if(verticalSpeed > -0.6){
 			verticalSpeed-=upThrust;
 		}
 		verticalSpeed+=0.001;
 		y+=verticalSpeed;
-		if(horizontalSpeed >= -0.4)
+		if(horizontalSpeed >= -0.46)
 			horizontalSpeed-= leftThrust;
-		if(horizontalSpeed <=0.4)
+		if(horizontalSpeed <=0.6)
 			horizontalSpeed+= rightThrust;
 		x+=horizontalSpeed;
 		System.out.println("vertical speed:" +verticalSpeed);
@@ -107,8 +107,9 @@ public class SpaceShip {
 	{
 		g.setColor(Color.RED);
 		Rectangle2D rect = new Rectangle2D.Double(x, y, 10, 10);
-		double valoresX[] = { x-5, x+5, x};
-		double valoresY[] = { y, y, y+10};
+		double valoresX[] = { x, x+10, x+5};
+		double valoresY[] = { y+10, y+10, y+10};
+			valoresY[2] += 10000 * upThrust;
 		//add mother ship eventually
 		Path2D path = new Path2D.Double();
 		/*path.lineTo(5, 10);
