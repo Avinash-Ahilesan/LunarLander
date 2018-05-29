@@ -34,14 +34,18 @@ public class SpaceShip {
 	public void setHorizontalSpeed(double horizontalSpeed) {
 		this.horizontalSpeed = horizontalSpeed;
 	}
-	
+
 	public void tick()
 	{
+		if(verticalSpeed > -0.4){
+			verticalSpeed-=upThrust;
+		}
 		verticalSpeed+=0.001;
-		verticalSpeed-=upThrust;
 		y+=verticalSpeed;
-		horizontalSpeed-= leftThrust;
-		horizontalSpeed+= rightThrust;
+		if(horizontalSpeed >= -0.4)
+			horizontalSpeed-= leftThrust;
+		if(horizontalSpeed <=0.4)
+			horizontalSpeed+= rightThrust;
 		x+=horizontalSpeed;
 		System.out.println("vertical speed:" +verticalSpeed);
 		System.out.println("horizontal Speed: " + horizontalSpeed);
@@ -57,10 +61,10 @@ public class SpaceShip {
 			rightThrust = 0;
 		}
 	}
-	
+
 	public void increaseRightThrust()
 	{
-		
+
 		if(rightThrust <=0.003){
 			rightThrust += 0.0003;
 			leftThrust = 0;
@@ -79,7 +83,7 @@ public class SpaceShip {
 	{
 		if(upThrust <=0.0027)
 			upThrust += 0.00005;
-		
+
 	}
 	public double getX()
 	{
@@ -97,7 +101,7 @@ public class SpaceShip {
 	{
 		this.y = y;
 	}
-	
+
 	public void draw(Graphics g)
 	{
 		g.setColor(Color.RED);
