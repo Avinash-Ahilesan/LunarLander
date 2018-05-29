@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
 import java.util.*;
 import java.util.concurrent.Executors;
@@ -106,8 +107,21 @@ public class SpaceShip {
 	{
 		g.setColor(Color.RED);
 		Rectangle2D rect = new Rectangle2D.Double(x, y, 10, 10);
+		double valoresX[] = { x-5, x+5, x};
+		double valoresY[] = { y, y, y+10};
+		//add mother ship eventually
+		Path2D path = new Path2D.Double();
+		/*path.lineTo(5, 10);
+		path.lineTo(0, 10);
+		path.lineTo(2.5, 20);*/
+		path.moveTo(valoresX[0], valoresY[0]);
+		for(int i = 1; i < valoresX.length; ++i) {
+		   path.lineTo(valoresX[i], valoresY[i]);
+		}
+		path.closePath();
 		Graphics2D g2 = (Graphics2D)g;
 		g2.draw(rect);
+		g2.draw(path);
 	}
 
 }
