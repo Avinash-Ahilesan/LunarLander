@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
 import java.util.*;
@@ -13,6 +14,7 @@ public class SpaceShip {
 	private double upThrust = 0;
 	private double rightThrust = 0;
 	private double leftThrust = 0;
+	private int angleOfSpaceShip = 0;
 	private long time;
 	private int fuel;
 	private double x = 612,y = 50;
@@ -61,6 +63,8 @@ public class SpaceShip {
 			leftThrust += 0.0003;
 			rightThrust = 0;
 		}
+		if(angleOfSpaceShip > -90)
+			angleOfSpaceShip -=1;
 	}
 
 	public void increaseRightThrust()
@@ -70,6 +74,8 @@ public class SpaceShip {
 			rightThrust += 0.0003;
 			leftThrust = 0;
 		}
+		if(angleOfSpaceShip < 90)
+			angleOfSpaceShip+=1;
 	}
 	public void destroyHorizontalThrust()
 	{
@@ -119,10 +125,15 @@ public class SpaceShip {
 		for(int i = 1; i < valoresX.length; ++i) {
 		   path.lineTo(valoresX[i], valoresY[i]);
 		}
+		
 		path.closePath();
 		Graphics2D g2 = (Graphics2D)g;
+	
+		AffineTransform oldTransform = g2.getTransform();
+	    g2.setTransform(AffineTransform.getRotateInstance(Math.toRadians(angleOfSpaceShip), x+5, y+5));	    
 		g2.draw(rect);
 		g2.draw(path);
+		g2.setTransform(oldTransform);
 	}
 
 }
