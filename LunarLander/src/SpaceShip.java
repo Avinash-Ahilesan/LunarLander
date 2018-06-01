@@ -49,9 +49,21 @@ public class SpaceShip {
 			horizontalSpeed-= leftThrust;
 		if(horizontalSpeed <=0.6)
 			horizontalSpeed+= rightThrust;
+		
+		if(angleOfSpaceShip < 0){
+			double city = Math.cos(Math.toRadians(Math.abs(angleOfSpaceShip)));
+			System.out.println(city);
+			leftThrust += (upThrust * city);
+		}
+		
+		if(angleOfSpaceShip > 0){
+			double city = Math.cos(Math.toRadians(Math.abs(angleOfSpaceShip)));
+			System.out.println(city);
+			rightThrust -= (upThrust * city);
+			
+		}
+		
 		x+=horizontalSpeed;
-		System.out.println("vertical speed:" +verticalSpeed);
-		System.out.println("horizontal Speed: " + horizontalSpeed);
 		/*if(rightThrust >0)
 			x+=rightThrust;
 		else if(leftThrust >0)
@@ -59,10 +71,10 @@ public class SpaceShip {
 	}
 	public void increaseLeftThrust()
 	{
-		if(leftThrust <=0.003){
+		/*if(leftThrust <=0.003){
 			leftThrust += 0.0003;
 			rightThrust = 0;
-		}
+		}*/
 		if(angleOfSpaceShip > -90)
 			angleOfSpaceShip -=1;
 	}
@@ -70,10 +82,10 @@ public class SpaceShip {
 	public void increaseRightThrust()
 	{
 
-		if(rightThrust <=0.003){
+		/*if(rightThrust <=0.003){
 			rightThrust += 0.0003;
 			leftThrust = 0;
-		}
+		}*/
 		if(angleOfSpaceShip < 90)
 			angleOfSpaceShip+=1;
 	}
