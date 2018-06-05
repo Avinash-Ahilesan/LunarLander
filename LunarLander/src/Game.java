@@ -20,7 +20,6 @@ public class Game extends JPanel implements Runnable, KeyListener{
 	private SpaceShip ship;
 	private BufferStrategy bufferStrat;
 	private Graphics g;
-	long time= 0;
 	private boolean keys[] = new boolean[256];
 	boolean left,right,up,down;
 	
@@ -51,7 +50,6 @@ public class Game extends JPanel implements Runnable, KeyListener{
 		frame.pack();
 		
 		setFocusable(true);
-		time = System.currentTimeMillis()/1000L;
 		ship = new SpaceShip(5000);
 		
 	}
