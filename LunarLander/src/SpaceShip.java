@@ -9,12 +9,18 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 public class SpaceShip {
-	private double verticalSpeed = 0;
-	private double horizontalSpeed = 0;
-	private double upThrust = 0;
-	private double rightThrust = 0;
-	private double leftThrust = 0;
-	private int angleOfSpaceShip = 0;
+	private static final double ROCKET_ROTATING = 0.4;
+	private static final double ROCKET_AY = 0.006;
+	private static final double FRICTION = 0.03;
+	private static final double GRAVITY = 0.004;
+	private double vy = 0;
+	private double vx = 0;
+	private double ay = 0;
+	private double ax = 0;
+	private double angleOfShip = 0;
+	private boolean moveUp = false;
+	private boolean rotateLeft = false;
+	private boolean rotateRight = false;
 	private long time;
 	private int fuel;
 	private double x = 612,y = 50;
@@ -26,83 +32,62 @@ public class SpaceShip {
 		this.fuel = fuel;
 	}
 	public double getVerticalSpeed() {
-		return verticalSpeed;
+		return vy;
 	}
 	public void setVerticalSpeed(double verticalSpeed) {
-		this.verticalSpeed = verticalSpeed;
+		this.vy = verticalSpeed;
 	}
 	public double getHorizontalSpeed() {
-		return horizontalSpeed;
+		return vx;
 	}
 	public void setHorizontalSpeed(double horizontalSpeed) {
-		this.horizontalSpeed = horizontalSpeed;
+		this.vx = horizontalSpeed;
 	}
 
-	public void tick()
+	public void tick(double delta)
 	{
-		if(verticalSpeed > -0.6){
-			verticalSpeed-=upThrust;
-		}
-		verticalSpeed+=0.001;
-		y+=verticalSpeed;
-		if(horizontalSpeed >= -0.46)
-			horizontalSpeed-= leftThrust;
-		if(horizontalSpeed <=0.6)
-			horizontalSpeed+= rightThrust;
 		
-		if(angleOfSpaceShip < 0){
-			double city = Math.cos(Math.toRadians(Math.abs(angleOfSpaceShip)));
-			System.out.println(city);
-			leftThrust += (upThrust * city);
-		}
+		 if (rotateLeft) {
+	            angleOfShip -= ROCKET_ROTATING * delta;
+	        }
+		 
+	        if (rotateRight) {
+	            angleOfShip += ROCKET_ROTATING * delta;
+	        }
+
+	        if (angleOfShip >= 360) {
+	            angleOfShip -= 360;
+	        } else if (angleOfShip < 0) {
+	            angleOfShip += 360;
+	        }
+
+	        if (moveUp) {
+	            ay = (float)(Math.cos(Math.toRadians(angleOfShip)) * ROCKET_AY);
+	            ax = (float)(Math.sin(Math.toRadians(angleOfShip)) * ROCKET_AY);
+	        } else {
+	            ay *= FRICTION;
+	            ax *= FRICTION;
+	        }
+
+	        vy -= (ay - GRAVITY) * delta;
+	        vx += ax * delta;
+
+	        y += vy;
+	        x += vx;
 		
-		if(angleOfSpaceShip > 0){
-			double city = Math.cos(Math.toRadians(Math.abs(angleOfSpaceShip)));
-			System.out.println(city);
-			rightThrust -= (upThrust * city);
-			
-		}
-		
-		x+=horizontalSpeed;
-		/*if(rightThrust >0)
-			x+=rightThrust;
-		else if(leftThrust >0)
-			x-= leftThrust;*/
 	}
-	public void increaseLeftThrust()
+	
+	public void moveUp(boolean moving)
 	{
-		/*if(leftThrust <=0.003){
-			leftThrust += 0.0003;
-			rightThrust = 0;
-		}*/
-		if(angleOfSpaceShip > -90)
-			angleOfSpaceShip -=1;
+		this.moveUp = moving;
 	}
-
-	public void increaseRightThrust()
+	public void moveLeft(boolean moving)
 	{
-
-		/*if(rightThrust <=0.003){
-			rightThrust += 0.0003;
-			leftThrust = 0;
-		}*/
-		if(angleOfSpaceShip < 90)
-			angleOfSpaceShip+=1;
+		this.rotateLeft = moving;
 	}
-	public void destroyHorizontalThrust()
+	public void moveRight(boolean moving)
 	{
-		leftThrust = 0;
-		rightThrust = 0;
-	}
-	public void destroyVerticalThrust()
-	{
-		upThrust = 0;
-	}
-	public void increaseUpThrust()
-	{
-		if(upThrust <=0.0027)
-			upThrust += 0.00005;
-
+		this.rotateRight = moving;
 	}
 	public double getX()
 	{
@@ -123,11 +108,10 @@ public class SpaceShip {
 
 	public void draw(Graphics g)
 	{
-		g.setColor(Color.RED);
-		Rectangle2D rect = new Rectangle2D.Double(x, y, 10, 10);
-		double valoresX[] = { x, x+10, x+5};
-		double valoresY[] = { y+10, y+10, y+10};
-			valoresY[2] += 10000 * upThrust;
+		g.setColor(Color.WHITE);
+		double valoresX[] = { x+20, x+29, x+24};
+		double valoresY[] = { y+39, y+39, y+39};
+			valoresY[2] += 5000 * (ay + ax);
 		//add mother ship eventually
 		Path2D path = new Path2D.Double();
 		/*path.lineTo(5, 10);
@@ -137,13 +121,17 @@ public class SpaceShip {
 		for(int i = 1; i < valoresX.length; ++i) {
 		   path.lineTo(valoresX[i], valoresY[i]);
 		}
-		
+		g.drawString(Double.toString(angleOfShip), 10, 30);
 		path.closePath();
 		Graphics2D g2 = (Graphics2D)g;
 	
 		AffineTransform oldTransform = g2.getTransform();
-	    g2.setTransform(AffineTransform.getRotateInstance(Math.toRadians(angleOfSpaceShip), x+5, y+5));	    
-		g2.draw(rect);
+		AffineTransform newTransform = AffineTransform.getRotateInstance(Math.toRadians(angleOfShip), x+25, y+25);
+		g2.setTransform(newTransform);
+		newTransform.setToTranslation(x, y);
+		
+	   // g2.setTransform(AffineTransform.getRotateInstance(Math.toRadians(angleOfShip), x+5, y+5));	  
+		g2.drawImage(ResourceManager.player, newTransform, null);
 		g2.draw(path);
 		g2.setTransform(oldTransform);
 	}

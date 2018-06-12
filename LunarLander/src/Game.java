@@ -57,6 +57,7 @@ public class Game extends JPanel implements Runnable, KeyListener{
 	
 	private void init()
 	{
+		ResourceManager.loadAssets();
 		//load assets and stuff
 	}
 	
@@ -79,14 +80,13 @@ public class Game extends JPanel implements Runnable, KeyListener{
 		}
 		g = bufferStrat.getDrawGraphics();
 
-		
+	
 		//Clear Screen
 		g.clearRect(0, 0, width, height);
 
 		//Start Draw
 		g.setColor(Color.black);
 		g.fillRect(0, 0, width, height);
-		
 		//g.drawImage(Res.cells, 95, 0, null);
 		//g.drawImage(Res.player, x, y, null);
 		//End Draw
@@ -97,28 +97,25 @@ public class Game extends JPanel implements Runnable, KeyListener{
 		g.dispose();
 	}
 	
-	private void tick()
+	private void tick(double nextTick)
 	{
 		//in my JRPG all my game logic (like updating player vars and stuff) went in here, not sure how useful this will be here
 		getGameInput();
-		if(left){ 
-			ship.increaseLeftThrust();
-		}
-		if(right){
-			ship.increaseRightThrust();
-		}
-		if(up){
-			ship.increaseUpThrust();
-		}
-		/*else if(down )
-			y+= 1;*/
-		if(left==false && right==false && up==false){
-			ship.destroyVerticalThrust();
-			ship.destroyHorizontalThrust();
-		}
-		else if(left==false && right==false)
-			ship.destroyHorizontalThrust();
-		ship.tick();
+		if(left)
+			ship.moveLeft(true);
+		else
+			ship.moveLeft(false);
+		if(right)
+			ship.moveRight(true);
+		else
+			ship.moveRight(false);
+		
+		if(up)
+			ship.moveUp(true);
+		else 
+			ship.moveUp(false);
+		
+		ship.tick(nextTick);
 		if(ship.getX()>1222)
 			ship.setX(2);
 		if(ship.getX() < 2)
@@ -149,7 +146,7 @@ public class Game extends JPanel implements Runnable, KeyListener{
 			lastTime = now;
 
 			if(nextTick >= 1){	//tick when needed 
-				tick();
+				tick(nextTick);
 				nextTick -= 1;
 			}
 			
