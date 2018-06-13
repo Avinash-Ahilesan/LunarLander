@@ -11,7 +11,7 @@ import javax.imageio.ImageIO;
 public class ResourceManager {
 	
 	
-	public static Image player;
+	public static Image player, background;
 	
 	public static AudioClip clip;
 	/*
@@ -22,6 +22,8 @@ public class ResourceManager {
 	public static void loadAssets()
 	{
 		player       =  loadImage ("images/image.png").getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+		background = loadImage("images/background.fw.png");
+		
 		//clip = Applet.newAudioClip(ResourceManager.class.getResource("sounds/getlow1.wav"));
 		//clip.loop();
 		//load assets from files

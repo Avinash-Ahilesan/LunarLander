@@ -3,16 +3,13 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Path2D;
-import java.awt.geom.Rectangle2D;
-import java.util.*;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.ThreadLocalRandom;
+
 public class SpaceShip {
 	private static final double ROCKET_ROTATING = 0.4;
 	private static final double ROCKET_AY = 0.006;
 	private static final double FRICTION = 0.03;
-	private static final double GRAVITY = 0.004;
+	private static final double GRAVITY = 0.003;
 	private double vy = 0;
 	private double vx = 0;
 	private double ay = 0;
@@ -111,7 +108,10 @@ public class SpaceShip {
 		g.setColor(Color.WHITE);
 		double valoresX[] = { x+20, x+29, x+24};
 		double valoresY[] = { y+39, y+39, y+39};
-			valoresY[2] += 5000 * (ay + ax);
+		if(moveUp){
+			int randomNum = ThreadLocalRandom.current().nextInt(0, 7);
+			valoresY[2] += 40 + randomNum ;
+		}
 		//add mother ship eventually
 		Path2D path = new Path2D.Double();
 		/*path.lineTo(5, 10);

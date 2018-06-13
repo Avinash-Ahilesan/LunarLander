@@ -87,10 +87,10 @@ public class Game extends JPanel implements Runnable, KeyListener{
 		//Start Draw
 		g.setColor(Color.black);
 		g.fillRect(0, 0, width, height);
-		//g.drawImage(Res.cells, 95, 0, null);
-		//g.drawImage(Res.player, x, y, null);
-		//End Draw
+		g.setColor(Color.white);
+		g.drawRoundRect(50, 50, 1, 1, 0, 0);
 		ship.draw(g);
+		//End Draw
 		g.drawString(Double.toString(ship.getHorizontalSpeed()), 10, 10);
 		g.drawString(Double.toString(ship.getVerticalSpeed()), 10, 20);
 		bufferStrat.show();
