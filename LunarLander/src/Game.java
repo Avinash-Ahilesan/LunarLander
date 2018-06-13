@@ -7,6 +7,8 @@ import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 
 
+import java.util.concurrent.ThreadLocalRandom;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -88,7 +90,7 @@ public class Game extends JPanel implements Runnable, KeyListener{
 		g.setColor(Color.black);
 		g.fillRect(0, 0, width, height);
 		g.setColor(Color.white);
-		g.drawRoundRect(50, 50, 1, 1, 0, 0);
+		g.drawImage(ResourceManager.background, 0,0,null);
 		ship.draw(g);
 		//End Draw
 		g.drawString(Double.toString(ship.getHorizontalSpeed()), 10, 10);
@@ -146,8 +148,8 @@ public class Game extends JPanel implements Runnable, KeyListener{
 			lastTime = now;
 
 			if(nextTick >= 1){	//tick when needed 
-				tick(nextTick);
 				nextTick -= 1;
+				tick(nextTick);
 			}
 			
 			render();	

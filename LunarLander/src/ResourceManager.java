@@ -1,6 +1,7 @@
 
 import java.applet.Applet;
 import java.applet.AudioClip;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -12,7 +13,7 @@ public class ResourceManager {
 	
 	
 	public static Image player, background;
-	
+	public static BufferedImage bckgrnd;
 	public static AudioClip clip;
 	/*
 	 * Description: loads assets

@@ -43,37 +43,35 @@ public class SpaceShip {
 
 	public void tick(double delta)
 	{
+System.out.println(delta);
+		if (rotateLeft) 
+			angleOfShip -= ROCKET_ROTATING; //* delta;
+
+		if (rotateRight) 
+			angleOfShip += ROCKET_ROTATING; //* delta;
+
+		if (angleOfShip >= 360) 
+			angleOfShip -= 360;
+		 else if (angleOfShip < 0) 
+			angleOfShip += 360;
 		
-		 if (rotateLeft) {
-	            angleOfShip -= ROCKET_ROTATING * delta;
-	        }
-		 
-	        if (rotateRight) {
-	            angleOfShip += ROCKET_ROTATING * delta;
-	        }
 
-	        if (angleOfShip >= 360) {
-	            angleOfShip -= 360;
-	        } else if (angleOfShip < 0) {
-	            angleOfShip += 360;
-	        }
+		if (moveUp) {
+			ay = (float)(Math.cos(Math.toRadians(angleOfShip)) * ROCKET_AY);
+			ax = (float)(Math.sin(Math.toRadians(angleOfShip)) * ROCKET_AY);
+		} else {
+			ay *= FRICTION;
+			ax *= FRICTION;
+		}
 
-	        if (moveUp) {
-	            ay = (float)(Math.cos(Math.toRadians(angleOfShip)) * ROCKET_AY);
-	            ax = (float)(Math.sin(Math.toRadians(angleOfShip)) * ROCKET_AY);
-	        } else {
-	            ay *= FRICTION;
-	            ax *= FRICTION;
-	        }
+		vy -= (ay - GRAVITY); //* delta;
+		vx += ax; //* delta;
 
-	        vy -= (ay - GRAVITY) * delta;
-	        vx += ax * delta;
+		y += vy;
+		x += vx;
 
-	        y += vy;
-	        x += vx;
-		
 	}
-	
+
 	public void moveUp(boolean moving)
 	{
 		this.moveUp = moving;
@@ -119,18 +117,18 @@ public class SpaceShip {
 		path.lineTo(2.5, 20);*/
 		path.moveTo(valoresX[0], valoresY[0]);
 		for(int i = 1; i < valoresX.length; ++i) {
-		   path.lineTo(valoresX[i], valoresY[i]);
+			path.lineTo(valoresX[i], valoresY[i]);
 		}
 		g.drawString(Double.toString(angleOfShip), 10, 30);
 		path.closePath();
 		Graphics2D g2 = (Graphics2D)g;
-	
+
 		AffineTransform oldTransform = g2.getTransform();
 		AffineTransform newTransform = AffineTransform.getRotateInstance(Math.toRadians(angleOfShip), x+25, y+25);
 		g2.setTransform(newTransform);
 		newTransform.setToTranslation(x, y);
-		
-	   // g2.setTransform(AffineTransform.getRotateInstance(Math.toRadians(angleOfShip), x+5, y+5));	  
+
+		// g2.setTransform(AffineTransform.getRotateInstance(Math.toRadians(angleOfShip), x+5, y+5));	  
 		g2.drawImage(ResourceManager.player, newTransform, null);
 		g2.draw(path);
 		g2.setTransform(oldTransform);
