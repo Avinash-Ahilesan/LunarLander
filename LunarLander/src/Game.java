@@ -92,6 +92,7 @@ public class Game extends JPanel implements Runnable, KeyListener{
 		g.setColor(Color.white);
 		g.drawImage(ResourceManager.background, 0,0,null);
 		ship.draw(g);
+		World.draw(g);
 		//End Draw
 		g.drawString(Double.toString(ship.getHorizontalSpeed()), 10, 10);
 		g.drawString(Double.toString(ship.getVerticalSpeed()), 10, 20);

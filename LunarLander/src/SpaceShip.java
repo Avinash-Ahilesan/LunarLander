@@ -7,7 +7,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class SpaceShip {
 	private static final double ROCKET_ROTATING = 0.4;
-	private static final double ROCKET_AY = 0.006;
+	private static final double ROCKET_AY = 0.008;
 	private static final double FRICTION = 0.03;
 	private static final double GRAVITY = 0.003;
 	private double vy = 0;
