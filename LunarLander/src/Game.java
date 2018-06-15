@@ -15,8 +15,7 @@ import java.util.Formatter;
 import java.util.Locale;
 import java.util.concurrent.ThreadLocalRandom;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 
 public class Game extends JPanel implements Runnable, KeyListener{
@@ -34,6 +33,7 @@ public class Game extends JPanel implements Runnable, KeyListener{
 	private boolean win = false;
 	private boolean keys[] = new boolean[256];
 	boolean left,right,up,down;
+	private int score = 0;
 	Camera cam;
 
 
@@ -119,14 +119,25 @@ public class Game extends JPanel implements Runnable, KeyListener{
 			g.drawString("Fuel:" + ship.getFuel(), 200, 20);
 			if(collided)
 			{
-				if(win) 
+				if(win) {
+				    if(ship.getX() < 200)
+                        score+=20;
+				    else if(ship.getX() < 450)
+				    	score+=100;
+				    else if(ship.getX() < 640)
+				    	score+=40;
+				    else
+				    	score+=10;
 					g.drawString("YOU HAVE LANDED!!!", 600, 340);
+
+				}
 					
 				else {
 					g.drawString("YOU HAVE CRASHED!!!", 600, 340);
 					
 					if(ship.getFuel() == 0)
 					{
+						gameState=1;
 					}
 					else
 					{
@@ -146,6 +157,30 @@ public class Game extends JPanel implements Runnable, KeyListener{
 
 			//End Draw
 		}
+		else if(gameState==1)
+		{
+			String s = (String)JOptionPane.showInputDialog(
+					frame, "Enter your Name! (leave blank to skip saving score)",
+					"High Score",
+					JOptionPane.PLAIN_MESSAGE,
+					null,
+					null,
+					"ham");
+			if(!(s.trim().length() == 0))
+            {
+
+            }
+            else
+            {
+
+            }
+            gameState =2;
+
+		}
+		if(gameState == 2)
+        {
+            //display high score, and give option to either exit game or restart
+        }
 		bufferStrat.show();
 		g.dispose();
 
@@ -155,42 +190,40 @@ public class Game extends JPanel implements Runnable, KeyListener{
 	{
 		//in my JRPG all my game logic (like updating player vars and stuff) went in here, not sure how useful this will be here
 		getGameInput();
-		if(collided)
-		{
-			if(bothLegsCollided){
-				if(ship.getVerticalSpeed() < 0.3 && Math.abs(ship.getHorizontalSpeed()) < 0.2)
-				{
-					if(ship.getShipAngle() > 350 || ship.getShipAngle() < 10)
-						win=true;
-					else
-						win=false;
-				}
-			}
-		}
-		else{
-			if(left)
-				ship.moveLeft(true);
-			else
-				ship.moveLeft(false);
-			if(right)
-				ship.moveRight(true);
-			else
-				ship.moveRight(false);
+		if(gameState == 0) {
+            if (collided) {
+                if (bothLegsCollided) {
+                    if (ship.getVerticalSpeed() < 0.3 && Math.abs(ship.getHorizontalSpeed()) < 0.2) {
+                        if (ship.getShipAngle() > 350 || ship.getShipAngle() < 10)
+                            win = true;
+                        else
+                            win = false;
+                    }
+                }
+            } else {
+                if (left)
+                    ship.moveLeft(true);
+                else
+                    ship.moveLeft(false);
+                if (right)
+                    ship.moveRight(true);
+                else
+                    ship.moveRight(false);
 
-			if(up)
-				ship.moveUp(true);
-			else 
-				ship.moveUp(false);
+                if (up)
+                    ship.moveUp(true);
+                else
+                    ship.moveUp(false);
 
-			ship.tick(nextTick);
-			cam.tick(ship);
-			if(ship.getX()>1222)
-				ship.setX(2);
-			if(ship.getX() < 2)
-				ship.setX(1222);
-		}
+                ship.tick(nextTick);
+                cam.tick(ship);
+                if (ship.getX() > 1222)
+                    ship.setX(2);
+                if (ship.getX() < 2)
+                    ship.setX(1222);
+            }
 
-
+        }
 	}
 	public void run() {
 		init();	//initialize (load all the resources)

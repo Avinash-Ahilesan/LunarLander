@@ -9,8 +9,8 @@ import java.awt.geom.Rectangle2D;
 
 public class World {
 	public static int[] map;
-	public static double[] xvalues = {0, 200.0, 400, 450 , 550, 580, 640, 680,720,820,900,1000,1050,1100, 1224, 1400, 0};
-	public static double[] yvalues = {850, 850.0, 750, 750, 550, 750, 750, 650,790,870,870,790,870,870, 700, 900, 900};
+	public static double[] xvalues = {0, 200, 400, 450 , 550, 580, 640, 680,720,820,900,1000,1050,1100, 1224, 1400, 0};
+	public static double[] yvalues = {850, 850, 750, 750, 550, 750, 750, 650,790,870,870,790,870,870, 700, 900, 900};
 	private static int gravity = 9;
 	public static Path2D path;
 	public static int getGravity() {
