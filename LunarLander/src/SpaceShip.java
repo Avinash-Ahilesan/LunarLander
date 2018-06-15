@@ -3,6 +3,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Path2D;
+import java.awt.geom.Rectangle2D;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class SpaceShip {
@@ -40,35 +41,47 @@ public class SpaceShip {
 	public void setHorizontalSpeed(double horizontalSpeed) {
 		this.vx = horizontalSpeed;
 	}
-
+	public double getVerticalAcceleration()
+	{
+		return ay;
+	}
+	public double setVerticalAcceleration()
+	{
+		return ax;
+	}
 	public void tick(double delta)
 	{
-System.out.println(delta);
-		if (rotateLeft) 
-			angleOfShip -= ROCKET_ROTATING; //* delta;
+		if(!Game.isCollided()){
+			if (rotateLeft) 
+				angleOfShip -= ROCKET_ROTATING; //* delta;
 
-		if (rotateRight) 
-			angleOfShip += ROCKET_ROTATING; //* delta;
+			if (rotateRight) 
+				angleOfShip += ROCKET_ROTATING; //* delta;
 
-		if (angleOfShip >= 360) 
-			angleOfShip -= 360;
-		 else if (angleOfShip < 0) 
-			angleOfShip += 360;
-		
+			if (angleOfShip >= 360) 
+				angleOfShip -= 360;
+			else if (angleOfShip < 0) 
+				angleOfShip += 360;
 
-		if (moveUp) {
-			ay = (float)(Math.cos(Math.toRadians(angleOfShip)) * ROCKET_AY);
-			ax = (float)(Math.sin(Math.toRadians(angleOfShip)) * ROCKET_AY);
-		} else {
-			ay *= FRICTION;
-			ax *= FRICTION;
+
+			if (moveUp) {
+				ay = (float)(Math.cos(Math.toRadians(angleOfShip)) * ROCKET_AY);
+				ax = (float)(Math.sin(Math.toRadians(angleOfShip)) * ROCKET_AY);
+			} else {
+				ay *= FRICTION;
+				ax *= FRICTION;
+			}
+
+			vy -= (ay - GRAVITY); //* delta;
+			vx += ax; //* delta;
+
+			y += vy;
+			x += vx;
 		}
-
-		vy -= (ay - GRAVITY); //* delta;
-		vx += ax; //* delta;
-
-		y += vy;
-		x += vx;
+		else
+		{
+			
+		}
 
 	}
 
@@ -83,6 +96,10 @@ System.out.println(delta);
 	public void moveRight(boolean moving)
 	{
 		this.rotateRight = moving;
+	}
+	public double getShipAngle()
+	{
+		return angleOfShip;
 	}
 	public double getX()
 	{
@@ -101,37 +118,35 @@ System.out.println(delta);
 		this.y = y;
 	}
 
-	public void draw(Graphics g)
+	public void draw(Graphics2D g, Camera cam)
 	{
 		g.setColor(Color.WHITE);
-		double valoresX[] = { x+20, x+29, x+24};
-		double valoresY[] = { y+39, y+39, y+39};
+		double xvalues[] = { x+20, x+29, x+24};
+		double yvalues[] = { y+39, y+39, y+39};
 		if(moveUp){
 			int randomNum = ThreadLocalRandom.current().nextInt(0, 7);
-			valoresY[2] += 40 + randomNum ;
+			yvalues[2] += 40 + randomNum ;
 		}
-		//add mother ship eventually
 		Path2D path = new Path2D.Double();
-		/*path.lineTo(5, 10);
-		path.lineTo(0, 10);
-		path.lineTo(2.5, 20);*/
-		path.moveTo(valoresX[0], valoresY[0]);
-		for(int i = 1; i < valoresX.length; ++i) {
-			path.lineTo(valoresX[i], valoresY[i]);
+		path.moveTo(xvalues[0], yvalues[0]);
+		for(int i = 1; i < xvalues.length; ++i) {
+			path.lineTo(xvalues[i], yvalues[i]);
 		}
 		g.drawString(Double.toString(angleOfShip), 10, 30);
 		path.closePath();
-		Graphics2D g2 = (Graphics2D)g;
 
-		AffineTransform oldTransform = g2.getTransform();
+		AffineTransform oldTransform = g.getTransform();
 		AffineTransform newTransform = AffineTransform.getRotateInstance(Math.toRadians(angleOfShip), x+25, y+25);
-		g2.setTransform(newTransform);
+		g.setTransform(newTransform);
 		newTransform.setToTranslation(x, y);
 
-		// g2.setTransform(AffineTransform.getRotateInstance(Math.toRadians(angleOfShip), x+5, y+5));	  
-		g2.drawImage(ResourceManager.player, newTransform, null);
-		g2.draw(path);
-		g2.setTransform(oldTransform);
+		// g2.setTransform(AffineTransform.getRotateInstance(Math.toRadians(angleOfShip), x+5, y+5));	
+		g.translate(cam.getX(), cam.getY());
+		g.drawImage(ResourceManager.player, newTransform, null);
+		g.draw(path);
+
+		g.translate(-cam.getX(), -cam.getY());
+		g.setTransform(oldTransform);
 	}
 
 }
