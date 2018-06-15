@@ -11,6 +11,8 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferStrategy;
 
 
+import java.util.Formatter;
+import java.util.Locale;
 import java.util.concurrent.ThreadLocalRandom;
 
 import javax.swing.JFrame;
@@ -61,7 +63,7 @@ public class Game extends JPanel implements Runnable, KeyListener{
 		frame.pack();
 
 		setFocusable(true);
-		ship = new SpaceShip(5000);
+		ship = new SpaceShip(1000);
 		cam = new Camera(0,0);
 
 	}
@@ -110,30 +112,26 @@ public class Game extends JPanel implements Runnable, KeyListener{
 			ship.draw(g2d, cam);
 			World.draw(g2d, ship);
 
-
 			g2d.translate(-cam.getX(), -cam.getY());
-			g.drawString(" Horizontal Speed: "  + String.format("%.1f", ship.getHorizontalSpeed() * 10), 10, 10);
+			g.drawString(" Horizontal Speed: "  + String.format("%.1f",ship.getHorizontalSpeed() * 10), 10, 10);
 			g.drawString(" Vertical Speed: " + String.format("%.1f", ship.getVerticalSpeed() * 10), 10, 20);
 			g.drawString("Ship Angle:" + ship.getShipAngle(), 200, 10);
 			g.drawString("Fuel:" + ship.getFuel(), 200, 20);
 			if(collided)
-				if(win) {
+			{
+				if(win) 
 					g.drawString("YOU HAVE LANDED!!!", 600, 340);
-
-
-				}
+					
 				else {
 					g.drawString("YOU HAVE CRASHED!!!", 600, 340);
+					
 					if(ship.getFuel() == 0)
 					{
-						gameState = 1;
 					}
 					else
 					{
 						try {
-							Thread.sleep(2000);
 							ship.setBack();
-							collided = false;
 						}
 						catch(Exception e)
 						{
@@ -142,10 +140,11 @@ public class Game extends JPanel implements Runnable, KeyListener{
 					}
 
 				}
+			}
 
 			//End Draw
 		}
-		
+
 		bufferStrat.show();
 		g.dispose();
 

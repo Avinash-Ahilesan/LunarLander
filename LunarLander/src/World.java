@@ -27,9 +27,10 @@ public class World {
 		for(int i = 1; i < xvalues.length; ++i) {
 			path.lineTo(xvalues[i], yvalues[i]);
 		}
-		Rectangle2D rect = new Rectangle2D.Double(ship.getX(), ship.getY(), ResourceManager.player.getWidth(null)-10, ResourceManager.player.getHeight(null)-10);
-		Point2D point  = new Point2D.Double(ship.getX(), ship.getY()+ ResourceManager.player.getHeight(null) - 10);
-		Point2D point1  = new Point2D.Double(ship.getX()+ResourceManager.player.getHeight(null) - 10, ship.getY()+ ResourceManager.player.getHeight(null) - 10);
+		Rectangle2D rect = new Rectangle2D.Double(ship.getX() + 7, ship.getY()+7, ResourceManager.player.getWidth(null)-15, ResourceManager.player.getHeight(null)-15);
+		g.draw(rect);
+		Point2D point  = new Point2D.Double(rect.getX(), rect.getY() +rect.getHeight());
+		Point2D point1  = new Point2D.Double(rect.getX()+rect.getWidth(), rect.getY()+rect.getHeight());
 		if(path.intersects(rect))
 		{
 			Game.setCollided(true);

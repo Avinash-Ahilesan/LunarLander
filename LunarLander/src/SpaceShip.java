@@ -59,6 +59,7 @@ public class SpaceShip {
 		ay=0;
 		ax=0;
 		angleOfShip = 0;
+		Game.setCollided(false);
 	}
 
 	public void tick(double delta)
