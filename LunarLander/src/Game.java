@@ -131,12 +131,15 @@ public class Game extends JPanel implements Runnable, KeyListener{
 					else
 					{
 						try {
+							bufferStrat.show();
+							g.dispose();
+							bufferStrat.show();
+							g.dispose();
+							Thread.sleep(1000);
 							ship.setBack();
 						}
 						catch(Exception e)
-						{
-
-						}
+						{						}
 					}
 
 				}
@@ -144,7 +147,6 @@ public class Game extends JPanel implements Runnable, KeyListener{
 
 			//End Draw
 		}
-
 		bufferStrat.show();
 		g.dispose();
 
