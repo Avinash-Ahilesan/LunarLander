@@ -49,6 +49,18 @@ public class SpaceShip {
 	{
 		return ax;
 	}
+	public int getFuel(){return fuel;}
+	public void setBack()
+	{
+		this.x=612;
+		this.y=50;
+		vy=0;
+		vx=0;
+		ay=0;
+		ax=0;
+		angleOfShip = 0;
+	}
+
 	public void tick(double delta)
 	{
 		if(!Game.isCollided()){
@@ -64,9 +76,10 @@ public class SpaceShip {
 				angleOfShip += 360;
 
 
-			if (moveUp) {
+			if (moveUp && fuel > 0) {
 				ay = (float)(Math.cos(Math.toRadians(angleOfShip)) * ROCKET_AY);
 				ax = (float)(Math.sin(Math.toRadians(angleOfShip)) * ROCKET_AY);
+				fuel--;
 			} else {
 				ay *= FRICTION;
 				ax *= FRICTION;
@@ -132,7 +145,6 @@ public class SpaceShip {
 		for(int i = 1; i < xvalues.length; ++i) {
 			path.lineTo(xvalues[i], yvalues[i]);
 		}
-		g.drawString(Double.toString(angleOfShip), 10, 30);
 		path.closePath();
 
 		AffineTransform oldTransform = g.getTransform();

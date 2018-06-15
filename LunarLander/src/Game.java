@@ -1,3 +1,5 @@
+import org.omg.PortableServer.THREAD_POLICY_ID;
+
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -41,13 +43,13 @@ public class Game extends JPanel implements Runnable, KeyListener{
 
 		frame = new JFrame ("Avinash and Siavash's Space Game");
 		frame.setSize(width, height);
-		frame.setResizable(false);
+		frame.setResizable(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	//game stays open in background unless this is set	
 		frame.setLocationRelativeTo(null);	//center window
 		frame.setVisible (true);
 
 
-		//canvas to paint on
+		//canvas to paint on3
 		canvas = new Canvas();
 		canvas.setPreferredSize(new Dimension(width, height));
 		canvas.setMaximumSize(new Dimension(width, height));
@@ -110,13 +112,37 @@ public class Game extends JPanel implements Runnable, KeyListener{
 
 
 			g2d.translate(-cam.getX(), -cam.getY());
-			g.drawString(Double.toString(ship.getHorizontalSpeed()), 10, 10);
-			g.drawString(Double.toString(ship.getVerticalSpeed()), 10, 20);
+			g.drawString(" Horizontal Speed: "  + String.format("%.1f", ship.getHorizontalSpeed() * 10), 10, 10);
+			g.drawString(" Vertical Speed: " + String.format("%.1f", ship.getVerticalSpeed() * 10), 10, 20);
+			g.drawString("Ship Angle:" + ship.getShipAngle(), 200, 10);
+			g.drawString("Fuel:" + ship.getFuel(), 200, 20);
 			if(collided)
-				if(win)
-					g.drawString("YOU HAVE WON!!!", 600, 340);
-				else
-					g.drawString("YOU HAVE LOST!!!", 600, 340);
+				if(win) {
+					g.drawString("YOU HAVE LANDED!!!", 600, 340);
+
+
+				}
+				else {
+					g.drawString("YOU HAVE CRASHED!!!", 600, 340);
+					if(ship.getFuel() == 0)
+					{
+						gameState = 1;
+					}
+					else
+					{
+						try {
+							Thread.sleep(2000);
+							ship.setBack();
+							collided = false;
+						}
+						catch(Exception e)
+						{
+
+						}
+					}
+
+				}
+
 			//End Draw
 		}
 		
