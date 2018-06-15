@@ -110,7 +110,7 @@ public class Game extends JPanel implements Runnable, KeyListener{
 
 			g2d.translate(cam.getX(), cam.getY());
 			ship.draw(g2d, cam);
-			World.draw(g2d, ship);
+			World.draw(g2d, ship, cam);
 
 			g2d.translate(-cam.getX(), -cam.getY());
 			g.drawString(" Horizontal Speed: "  + String.format("%.1f",ship.getHorizontalSpeed() * 10), 10, 10);
@@ -132,7 +132,6 @@ public class Game extends JPanel implements Runnable, KeyListener{
 					{
 						try {
 							bufferStrat.show();
-							g.dispose();
 							bufferStrat.show();
 							g.dispose();
 							Thread.sleep(1000);

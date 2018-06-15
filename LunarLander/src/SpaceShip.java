@@ -137,7 +137,7 @@ public class SpaceShip {
 		g.setColor(Color.WHITE);
 		double xvalues[] = { x+20, x+29, x+24};
 		double yvalues[] = { y+39, y+39, y+39};
-		if(moveUp){
+		if(moveUp && fuel > 0){
 			int randomNum = ThreadLocalRandom.current().nextInt(0, 7);
 			yvalues[2] += 40 + randomNum ;
 		}
@@ -149,7 +149,7 @@ public class SpaceShip {
 		path.closePath();
 
 		AffineTransform oldTransform = g.getTransform();
-		AffineTransform newTransform = AffineTransform.getRotateInstance(Math.toRadians(angleOfShip), x+25, y+25);
+		AffineTransform newTransform = AffineTransform.getRotateInstance(Math.toRadians(angleOfShip), cam.getX() + x+25, cam.getY() + y+25);
 		g.setTransform(newTransform);
 		newTransform.setToTranslation(x, y);
 

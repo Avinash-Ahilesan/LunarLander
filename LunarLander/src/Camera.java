@@ -15,6 +15,8 @@ public class Camera {
 			//x=(-ship.getX() + Game.WIDTH)
 			//ship.setY(ship.getY() - 100);
 	   }
+		if(y-ship.getY() >=20 && y !=0)
+			y=(-ship.getY() -Game.HEIGHT/2);
 		/*y+=1;*/
 			//x=-ship.getX()+Game.WIDTH/2;
 		/*if(ship.getX() > 1222)

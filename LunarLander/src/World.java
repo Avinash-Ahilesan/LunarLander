@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
@@ -8,8 +9,8 @@ import java.awt.geom.Rectangle2D;
 
 public class World {
 	public static int[] map;
-	public static double[] xvalues = {0, 200.0, 400, 450 , 550, 580, 640, 680,720,820,900,1000,1050,1100, 1224};
-	public static double[] yvalues = {850, 850.0, 750, 750, 550, 750, 750, 650,790,870,870,790,870,870, 700};
+	public static double[] xvalues = {0, 200.0, 400, 450 , 550, 580, 640, 680,720,820,900,1000,1050,1100, 1224, 1400, 0};
+	public static double[] yvalues = {850, 850.0, 750, 750, 550, 750, 750, 650,790,870,870,790,870,870, 700, 900, 900};
 	private static int gravity = 9;
 	public static Path2D path;
 	public static int getGravity() {
@@ -19,7 +20,7 @@ public class World {
 	public static void setGravity(int gravity) {
 		World.gravity = gravity;
 	}
-	public static void draw(Graphics2D g, SpaceShip ship)
+	public static void draw(Graphics2D g, SpaceShip ship, Camera cam)
 	{
 		g.setColor(Color.white);
 		Path2D path = new Path2D.Double();
@@ -27,8 +28,17 @@ public class World {
 		for(int i = 1; i < xvalues.length; ++i) {
 			path.lineTo(xvalues[i], yvalues[i]);
 		}
+		path.closePath();
 		Rectangle2D rect = new Rectangle2D.Double(ship.getX() + 7, ship.getY()+7, ResourceManager.player.getWidth(null)-15, ResourceManager.player.getHeight(null)-15);
+		
+		AffineTransform oldTransform = g.getTransform();
+		AffineTransform newTransform = AffineTransform.getRotateInstance(Math.toRadians(ship.getShipAngle()), cam.getX()+ ship.getX()+25, cam.getY() + ship.getY()+25);
+		g.setTransform(newTransform);
+		
+		g.translate(cam.getX(), cam.getY());
 		g.draw(rect);
+		g.translate(-cam.getX(), -cam.getY());
+		g.setTransform(oldTransform);
 		Point2D point  = new Point2D.Double(rect.getX(), rect.getY() +rect.getHeight());
 		Point2D point1  = new Point2D.Double(rect.getX()+rect.getWidth(), rect.getY()+rect.getHeight());
 		if(path.intersects(rect))
