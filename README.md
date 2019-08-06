@@ -15,7 +15,7 @@ ECLIPSE instructions:
 
 INTELLIJ instructions:
 
-1)c
+1) click on the Project view or unhide it by clicking on the "1: Project" button on the left border of the window or by pressing Alt + 1
 
 2) right click the project (LunarLander) and choose "Open Module Settings" 
 3) click on the dependencies tab
