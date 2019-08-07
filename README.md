@@ -1,5 +1,5 @@
 # LunarLander
-A version of lunar lander built in java.
+A version of lunar lander built in java, programmed by me in 2017.
 NOTE: when building, make sure to add the folder "res" as a class folder.
 
 ECLIPSE instructions:
@@ -23,3 +23,9 @@ INTELLIJ instructions:
 5) Find the path to the "res" folder
 6) In the dialog with "Choose Categories of Selected File", choose Classes (even if it's properties)
 7) Res is now added so images can be loaded.
+
+Concepts learned and used:
+-Object Oriented Programming
+-Data structures + sorting with data structures
+-programming game physics
+-jframe + graphics
