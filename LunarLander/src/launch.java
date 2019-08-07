@@ -6,4 +6,5 @@ public class launch {
 		Game game = new Game(1224,900);
 		game.start();
 	}
+
 }

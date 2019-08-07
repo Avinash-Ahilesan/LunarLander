@@ -1,13 +1,9 @@
 
-import java.applet.Applet;
+import javax.imageio.ImageIO;
 import java.applet.AudioClip;
-import java.awt.Graphics2D;
-import java.awt.Image;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.*;
-
-import javax.imageio.ImageIO;
 
 public class ResourceManager {
 	
@@ -24,9 +20,7 @@ public class ResourceManager {
 	{
 		player       =  loadImage ("images/image.png").getScaledInstance(50, 50, Image.SCALE_SMOOTH);
 		background = loadImage("images/background.fw.png");
-		
-		//clip = Applet.newAudioClip(ResourceManager.class.getResource("sounds/getlow1.wav"));
-		//clip.loop();
+
 		//load assets from files
 	}
 	
